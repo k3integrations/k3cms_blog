@@ -1,0 +1,7 @@
+.k3_blog_post .title {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.k3_blog_post + .k3_blog_post {
+  margin-top: 20px;
+}

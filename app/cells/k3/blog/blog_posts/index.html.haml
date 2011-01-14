@@ -1,0 +1,12 @@
+%h1 News
+
+- K3::Blog::BlogPost.find_each do |post|
+  .k3_blog_post
+    .title= post.title
+    .summary= raw post.summary
+    .date= post.date
+
+- if k3_user.k3_permitted?(:create_page)
+  %p
+    = form_for @page=K3::Blog::BlogPost.new do |f|
+      = f.submit 'Create new post'
