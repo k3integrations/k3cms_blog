@@ -1,9 +1,10 @@
 module K3
   module Blog
     class BlogPostsController < K3::Blog::BaseController
-      load_and_authorize_resource :blog_post, :class => 'K3::Blog::BlogPost', :except => :not_found
+      load_and_authorize_resource :blog_post, :class => 'K3::Blog::BlogPost'
 
       def index
+        @blog_posts = @blog_posts.order('id desc')
         respond_to do |format|
           format.html # index.html.erb
           format.xml  { render :xml  => @blog_posts }
@@ -44,7 +45,12 @@ module K3
 
         respond_to do |format|
           if @blog_post.save
-            format.html { redirect_to(k3_blog_blog_post_url(@blog_post), :notice => 'Blog post was successfully created.') }
+            format.html do
+              #redirect_to(k3_blog_blog_post_url(@blog_post),
+
+              redirect_to(root_url(:focus => "##{dom_id(@blog_post)} .editable[data-attribute=title]"),
+                          :notice => 'Blog post was successfully created.')
+            end
             format.xml  { render :xml => @blog_post, :status => :created, :location => @blog_post }
             format.json { render :nothing =>  true }
           else
@@ -75,7 +81,8 @@ module K3
       def destroy
         @blog_post.destroy
         respond_to do |format|
-          format.html { redirect_to(k3_blog_blog_posts_url) }
+          #format.html { redirect_to(k3_blog_blog_posts_url) }
+          format.html { redirect_to root_url }
           format.xml  { head :ok }
           format.json { render :nothing =>  true }
         end

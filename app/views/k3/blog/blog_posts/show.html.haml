@@ -1,0 +1,20 @@
+.k3_blog_blog_posts_show
+  - content_for :last_saved_status do
+    = render_cell('k3/blog/blog_posts', :last_saved_status, :blog_post => @blog_post)
+  - content_for :title do
+    = strip_tags @blog_post.title
+
+  %div{:class => dom_class(@blog_post), :id => dom_id(@blog_post)}
+    = render_cell('k3/blog/blog_posts', :published_status, :blog_post => @blog_post)
+    %h1
+      - if edit_mode?
+        %span.editable{"data-attribute" => "title", "data-formtype" => "inline_editor", "data-object" => "k3_blog_post", "data-url" => k3_blog_blog_post_path(@blog_post)}
+          = raw(@blog_post.title)
+      - else
+        = raw(@blog_post.title)
+
+    - if edit_mode?
+      .editable{"data-attribute" => "body", "data-formtype" => "inline_editor", "data-object" => "k3_blog_post", "data-url" => k3_blog_blog_post_path(@blog_post)}
+        = raw(@blog_post.body)
+    - else
+      = raw(@blog_post.body)

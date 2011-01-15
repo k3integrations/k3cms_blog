@@ -60,7 +60,27 @@ module K3::Blog
       end
     end
 
+    describe "published?" do
+      it 'when date is yesterday, it will report itself as being unpublished' do
+        @blog_post = BlogPost.create!(:date => Date.new(2011,12,31))
+        @blog_post.should_not be_published
+      end
+
+      it 'when date is today, it will report itself as being published' do
+        @blog_post = BlogPost.create!(:date => Date.new(2011,1,1))
+        @blog_post.should be_published
+      end
+
+    end
+
     describe "validation" do
+    end
+
+    describe "normalization" do
+      [:title, :summary, :body].each do |attr_name|
+        it { should normalize_attribute(attr_name).from('  Something  ').to('Something') }
+        it { should normalize_attribute(attr_name).from('').to(nil) }
+      end
     end
 
     describe 'to_s' do
@@ -69,7 +89,5 @@ module K3::Blog
         blog_post.to_s.should match(/Home/)
       end
     end
-
-
   end
 end

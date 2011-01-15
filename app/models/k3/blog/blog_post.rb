@@ -1,4 +1,5 @@
 require 'active_record'
+require 'attribute_normalizer'
 
 module K3
   module Blog
@@ -6,6 +7,8 @@ module K3
       set_table_name 'k3_blog_posts'
 
       belongs_to :author, :class_name => 'User'
+
+      normalize_attributes :title, :summary, :body, :with => [:strip, :blank]
 
       validates :title, :presence => true
 
@@ -27,6 +30,10 @@ module K3
 
       def inspect
         "BlogPost #{id} (#{title})"
+      end
+
+      def published?
+        Time.zone.now >= date.beginning_of_day
       end
     end
   end

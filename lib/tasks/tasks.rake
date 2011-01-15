@@ -6,7 +6,7 @@ namespace :k3 do
     
     desc "Copy public files"
     task :copy_public do
-      K3::FileUtils.copy_from_gem K3::Blog, 'public'
+      K3::FileUtils.symlink_files_from_gem K3::Blog, 'public/**/*'
     end
     
     desc "Copy migrations"

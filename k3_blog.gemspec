@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'actionpack',   '~> 3.0.0'
   s.add_dependency 'cells'
   s.add_dependency 'k3_core'
+  s.add_dependency 'attribute_normalizer'
   s.add_development_dependency 'rspec', '~> 2.2.0'
   s.add_development_dependency 'rspec-rails', '~> 2.2.0'
   s.add_development_dependency 'sqlite3-ruby'

@@ -1,12 +1,40 @@
-%h1 News
+.k3_blog_blog_posts_index
+  %h1 News
 
-- K3::Blog::BlogPost.find_each do |post|
-  .k3_blog_post
-    .title= post.title
-    .summary= raw post.summary
-    .date= post.date
+  - @blog_posts.each do |blog_post|
+    %div{:class => dom_class(blog_post), :id => dom_id(blog_post)}
+      .title
+        - if edit_mode?
+          =# TODO: inline_editable('span', blog_post, :title)
+          %span.editable{'data-url' => k3_blog_blog_post_path(blog_post), 'data-object' => "k3_blog_post", 'data-attribute' => "title",  'data-formtype' => "inline_editor"}<
+            = raw blog_post.title
+        - else
+          = link_to raw(blog_post.title), k3_blog_blog_post_path(blog_post)
 
-- if k3_user.k3_permitted?(:create_page)
-  %p
-    = form_for @page=K3::Blog::BlogPost.new do |f|
-      = f.submit 'Create new post'
+      = render_cell('k3/blog/blog_posts', :published_status, :blog_post => blog_post)
+
+      .date
+        - if edit_mode?
+          %span.editable{'data-url' => k3_blog_blog_post_path(blog_post), 'data-object' => "k3_blog_post", 'data-attribute' => "date",  'data-formtype' => "inline_editor"}<
+            = raw blog_post.date
+        - else
+          = raw blog_post.date
+
+      .summary
+        - if edit_mode?
+          .editable{'data-url' => k3_blog_blog_post_path(blog_post), 'data-object' => "k3_blog_post", 'data-attribute' => "summary",  'data-formtype' => "inline_editor"}<
+            = raw blog_post.summary
+        - else
+          = raw blog_post.summary
+
+      - if edit_mode?
+        = link_to   'Continue &raquo;'.html_safe, k3_blog_blog_post_path(blog_post, :focus => "##{dom_id(blog_post)} .editable[data-attribute=body]")
+        = button_to 'Delete',                     k3_blog_blog_post_path(blog_post), :confirm => 'Are you sure?', :method => :delete
+
+      - else
+        = link_to   'View more', k3_blog_blog_post_path(blog_post)
+
+  - if edit_mode? and k3_user.k3_permitted?(:create_blog_post)
+    %p
+      = form_for blog_post=K3::Blog::BlogPost.new do |f|
+        = f.submit 'Create new post'

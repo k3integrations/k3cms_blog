@@ -1,7 +1,8 @@
 require 'facets'
 require 'rails'
 require 'action_pack'
-require 'action_view/railtie' # so that config.action_view is available in engine.rb
+require 'action_view/railtie' # So that config.action_view is available in engine.rb
+require 'active_record'       # Make sure this gets required before attribute_normalizer
 Bundler.require(:default, :development)
 
 require File.expand_path('../../lib/k3_blog', __FILE__)
@@ -38,4 +39,6 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+
+  config.include AttributeNormalizer::RSpecMatcher
 end

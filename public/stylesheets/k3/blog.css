@@ -1,7 +1,17 @@
-.k3_blog_post .title {
+.k3_blog_blog_post .title {
   font-weight: bold;
   text-decoration: underline;
 }
-.k3_blog_post + .k3_blog_post {
+.k3_blog_blog_post + .k3_blog_blog_post {
   margin-top: 20px;
+}
+
+.k3_blog_blog_posts_index .unpublished,
+.k3_blog_blog_posts_show  .unpublished {
+  color: red;
+}
+.k3_blog_blog_posts_index .unpublished {
+}
+.k3_blog_blog_posts_show  .unpublished {
+  font-size: 110%;
 }
