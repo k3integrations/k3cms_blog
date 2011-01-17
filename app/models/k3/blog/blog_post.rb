@@ -34,7 +34,7 @@ module K3
       end
 
       def published?
-        Time.zone.now >= date.beginning_of_day
+        date and Time.zone.now >= date.beginning_of_day
       end
     end
   end
