@@ -28,8 +28,10 @@
           = raw blog_post.summary
 
       - if edit_mode?
-        = link_to   'Continue &raquo;'.html_safe, k3_blog_blog_post_path(blog_post, :focus => "##{dom_id(blog_post)} .editable[data-attribute=body]")
-        = button_to 'Delete',                     k3_blog_blog_post_path(blog_post), :confirm => 'Are you sure?', :method => :delete
+        - if can?(:edit, K3::Blog::BlogPost)
+          = link_to   'Continue &raquo;'.html_safe, k3_blog_blog_post_path(blog_post, :focus => "##{dom_id(blog_post)} .editable[data-attribute=body]")
+        - if can?(:destroy, K3::Blog::BlogPost)
+          = button_to 'Delete',                     k3_blog_blog_post_path(blog_post), :confirm => 'Are you sure?', :method => :delete
 
       - else
         = link_to   'View more', k3_blog_blog_post_path(blog_post)
