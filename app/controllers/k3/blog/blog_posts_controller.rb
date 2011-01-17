@@ -18,14 +18,10 @@ module K3
           format.xml  { render :xml  => @blog_post }
 
           format.json {
-            # So we have data-object="k3_blog_post" for rest_in_place so that the params come in as params[:k3_blog_post] like the controller expects (and which works well since form_for @blog_post creates fields named that way).
-            # But that causes rest_in_place to expect the json object to be in the form {"k3_blog_post":...}
+            # So we have data-object="k3_blog_blog_post" for rest_in_place so that the params come in as params[:k3_blog_blog_post] like the controller expects (and which works well since form_for @blog_post creates fields named that way).
+            # But that causes rest_in_place to expect the json object to be in the form {"k3_blog_blog_post":...}
             # But K3::Blog::BlogPost.model_name.element drops the namespace and returns 'blog_post' by default. Here is my workaround:
-            K3::Blog::BlogPost.model_name.instance_variable_set('@element', 'k3_blog_post')
-            # Other options:
-            # * Pass include_root_in_json => false in the as_json options?
-            # * ActiveRecord::Base.include_root_in_json = false and do render :json => { :k3_blog_post => @blog_post }
-            # * ActiveRecord::Base.include_root_in_json = false and modify rest_in_place to not require/expect the element name to be in the JSON object response.
+            K3::Blog::BlogPost.model_name.instance_variable_set('@element', dom_class(@blog_post))
             render :json => @blog_post
           }
         end
@@ -40,7 +36,7 @@ module K3
       end
 
       def create
-        @blog_post.attributes = params[:k3_blog_post]
+        @blog_post.attributes = params[:k3_blog_blog_post]
         @blog_post.author = current_user
 
         respond_to do |format|
@@ -66,7 +62,7 @@ module K3
 
       def update
         respond_to do |format|
-          if @blog_post.update_attributes(params[:k3_blog_post])
+          if @blog_post.update_attributes(params[:k3_blog_blog_post])
             format.html { redirect_to(k3_blog_blog_post_url(@blog_post), :notice => 'Blog post was successfully updated.') }
             format.xml  { head :ok }
             format.json { render :nothing =>  true }

@@ -2,6 +2,7 @@ module K3
   module Blog
     class BlogPostsCell < Cell::Rails
       helper K3::Ribbon::RibbonHelper # for edit_mode?
+      helper K3::InlineEditor::InlineEditorHelper
 
       # Sorry this is duplicated between here and app/controllers/k3/blog/base_controller.rb
       # I tried refactoring the common code out to a BaseControllerModule module that got mixed in both places, but for whatever reason that I couldn't figure out, it would use the current_ability defined in k3_cancan/lib/cancan/controller_additions.rb:277:
