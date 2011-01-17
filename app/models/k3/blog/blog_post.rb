@@ -15,11 +15,12 @@ module K3
       after_initialize :set_defaults
       def set_defaults
         # Copy summary to body
-        self.body = self.attributes['summary'] if self.attributes['body'].nil? && self.attributes['summary']
+        default_summary = '<p>Summary description goes here</p>'
+        self.body = self.attributes['summary'] if self.attributes['body'].nil? && self.attributes['summary'] && self.attributes['summary'] != default_summary
 
         if new_record?
           self.title   = 'New Post'                             if self.attributes['title'].nil?
-          self.summary = '<p>Summary description goes here</p>' if self.attributes['summary'].nil?
+          self.summary = default_summary                        if self.attributes['summary'].nil?
           self.date = Date.tomorrow                             if self.attributes['date'].nil?
         end
       end
