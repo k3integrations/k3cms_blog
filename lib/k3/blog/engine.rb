@@ -16,6 +16,9 @@ module K3
         Cell::Base.view_paths += [Pathname[__DIR__] + '../../../app/cells']
       end
 
+      config.to_prepare do |app|
+        require Pathname[__DIR__] + '../../../app/models/user.rb'
+      end
     end
 
   end
