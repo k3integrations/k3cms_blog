@@ -7,7 +7,7 @@ module K3
         alias_action :last_saved_status, :to => :update
 
         if user.k3_permitted?(:view_blog_post)
-          can :show, K3::Blog::BlogPost
+          can :read, K3::Blog::BlogPost
         end
 
         if user.k3_permitted?(:edit_blog_post)
