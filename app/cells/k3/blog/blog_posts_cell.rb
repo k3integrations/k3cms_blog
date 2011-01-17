@@ -20,6 +20,8 @@ module K3
 
       def index
         @blog_posts = BlogPost.accessible_by(current_ability).order('id desc')
+        # This is to enforce the blog_post.published? condition specified in a block. accessible_by doesn't automatically check the block conditions when fetching records.
+        @blog_posts.select! {|blog_post| can?(:read, blog_post)}
         render
       end
 
