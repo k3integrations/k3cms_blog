@@ -73,14 +73,14 @@ module K3::Blog
 
     end
 
-    describe "validation" do
-    end
-
     describe "normalization" do
-      [:title, :summary, :body].each do |attr_name|
+      [:title, :summary, :body, :url].each do |attr_name|
         it { should normalize_attribute(attr_name).from('  Something  ').to('Something') }
         it { should normalize_attribute(attr_name).from('').to(nil) }
       end
+    end
+
+    describe "validation" do
     end
 
     describe 'to_s' do

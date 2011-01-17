@@ -8,7 +8,7 @@ module K3
 
       belongs_to :author, :class_name => 'User'
 
-      normalize_attributes :title, :summary, :body, :with => [:strip, :blank]
+      normalize_attributes :title, :summary, :body, :url, :with => [:strip, :blank]
 
       validates :title, :presence => true
 
