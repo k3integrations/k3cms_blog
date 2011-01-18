@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 require 'app/models/k3/blog/blog_post'
 
@@ -60,6 +61,17 @@ module K3::Blog
       end
     end
 
+    describe 'friendly_id' do
+      [['my COOL tItLe!', 'my-cool-title'],
+       ['你好',           'ni-hao'],
+      ].each do |title, slug|
+        it "converts title '#{title}' to #{slug}" do
+          @blog_post = BlogPost.create!(:title => title)
+          @blog_post.friendly_id.should == slug
+        end
+      end
+    end
+
     describe "published?" do
       it 'when date is yesterday, it will report itself as being unpublished' do
         @blog_post = BlogPost.create!(:date => Date.new(2011,12,31))
@@ -81,6 +93,14 @@ module K3::Blog
     end
 
     describe "validation" do
+     #describe "when it has the same url as another page" do
+     #  it "should fail validation" do
+     #    page1 = BlogPost.create(url: '/page1')
+     #    page2 = BlogPost.create(url: '/page1')
+     #    page2.should_not be_valid
+     #    page2.errors[:url].should be_present
+     #  end
+     #end
     end
 
     describe 'to_s' do

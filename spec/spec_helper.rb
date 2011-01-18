@@ -9,6 +9,10 @@ require File.expand_path('../../lib/k3_blog', __FILE__)
 
 require 'connection_and_schema'
 
+
+class User < ActiveRecord::Base
+end
+
 module TestApp
   class Application < Rails::Application
     config.active_support.deprecation = :stderr

@@ -1,22 +1,25 @@
-require 'active_record'
-require 'attribute_normalizer'
 
 module K3
   module Blog
     class BlogPost < ActiveRecord::Base
       set_table_name 'k3_blog_blog_posts'
 
+      has_friendly_id :title, :use_slug => true #, :allow_nil => true, :approximate_ascii => true
+
       belongs_to :author, :class_name => 'User'
 
       normalize_attributes :title, :summary, :body, :url, :with => [:strip, :blank]
 
       validates :title, :presence => true
+      #validates :url, :uniqueness => true, :allow_nil => true, :allow_blank => true
 
       after_initialize :set_defaults
       def set_defaults
         # Copy summary to body
         default_summary = '<p>Summary description goes here</p>'
-        self.body = self.attributes['summary'] if self.attributes['body'].nil? && self.attributes['summary'] && self.attributes['summary'] != default_summary
+        self.body = self.attributes['summary']                   if self.attributes['body'].nil? && self.attributes['summary'].present? && self.attributes['summary'] != default_summary
+
+        #self.url  = '/' + title.humanize.gsub(' ', '-').downcase if self.attributes['url'].nil?  && self.attributes['title'].present?
 
         if new_record?
           self.title   = 'New Post'                             if self.attributes['title'].nil?
@@ -31,6 +34,10 @@ module K3
 
       def inspect
         "BlogPost #{id} (#{title})"
+      end
+
+      def normalize_friendly_id(text)
+        text.to_url
       end
 
       def published?
