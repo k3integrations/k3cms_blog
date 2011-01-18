@@ -33,6 +33,11 @@ module K3
         end
       end
 
+      def metadata_drawer
+        @blog_post = @opts[:blog_post]
+        render
+      end
+
     end
   end
 end
