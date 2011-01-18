@@ -4,7 +4,7 @@ require 'attribute_normalizer'
 module K3
   module Blog
     class BlogPost < ActiveRecord::Base
-      set_table_name 'k3_blog_posts'
+      set_table_name 'k3_blog_blog_posts'
 
       belongs_to :author, :class_name => 'User'
 
