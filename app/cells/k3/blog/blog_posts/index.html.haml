@@ -17,6 +17,9 @@
 
       = render_cell('k3/blog/blog_posts', :published_status, :blog_post => blog_post)
 
+      /
+        url: #{blog_post.url}
+
       .date
         - if edit_mode?
           = inline_editable('span', blog_post, :date) do

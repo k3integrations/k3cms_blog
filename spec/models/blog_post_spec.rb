@@ -64,11 +64,81 @@ module K3::Blog
     describe 'friendly_id' do
       [['my COOL tItLe!', 'my-cool-title'],
        ['你好',           'ni-hao'],
+       ['Łódź, Poland',   'lodz-poland'],
       ].each do |title, slug|
         it "converts title '#{title}' to #{slug}" do
           @blog_post = BlogPost.create!(:title => title)
           @blog_post.friendly_id.should == slug
         end
+      end
+
+      it "when I create 2 posts with default title 'New Post', the url for the 2nd post gets a sequence ('new-post--2')" do
+        BlogPost.destroy_all
+        @blog_post_1 = BlogPost.create!()
+        @blog_post_1.cached_slug.should == 'new-post'
+        @blog_post_2 = BlogPost.create!()
+        @blog_post_2.cached_slug.should == 'new-post--2'
+      end
+
+      it "when I change the url/slug, it should still be accessable by the old as well as the new" do
+        BlogPost.destroy_all
+        @blog_post = BlogPost.create!()
+        @blog_post.cached_slug.should == 'new-post'
+
+        @blog_post.update_attributes!(:url => 'a')
+        @blog_post.cached_slug.should == 'a'
+
+        @blog_post.should == BlogPost.find('new-post')
+        @blog_post.should == BlogPost.find('a')
+      end
+
+      # Updates slug automatically because custom url has not been set
+      it "when I set title to 'A', then change title to 'B', url and cached_slug ends up being 'b'" do
+        BlogPost.destroy_all
+        @blog_post = BlogPost.create!(:title => 'A')
+        @blog_post.url        .should == 'a'
+        @blog_post.cached_slug.should == 'a'
+        @blog_post.should_not be_custom_url
+
+        @blog_post.update_attributes!(:title => 'B')
+        @blog_post.url        .should == 'b'
+        @blog_post.cached_slug.should == 'b'
+        @blog_post.should_not be_custom_url
+      end
+
+      # Setting custom url disables automatic slug generation
+      it "when I set url to 'a', then change title to 'B', cached_slug remains at the custom url, 'a'" do
+        BlogPost.destroy_all
+        @blog_post = BlogPost.create!()
+        @blog_post.url        .should == 'new-post'
+        @blog_post.cached_slug.should == 'new-post'
+        @blog_post.should_not be_custom_url
+
+        @blog_post.update_attributes!(:url => 'a')
+        @blog_post.url        .should == 'a'
+        @blog_post.cached_slug.should == 'a'
+        @blog_post.should be_custom_url
+
+        @blog_post.update_attributes!(:title => 'B')
+        @blog_post.url        .should == 'a'
+        @blog_post.cached_slug.should == 'a'
+      end
+
+      it "when I set url to something invalid like 'My Post', it converts it to something valid" do
+        BlogPost.destroy_all
+        @blog_post = BlogPost.create!()
+        @blog_post.url        .should == 'new-post'
+        @blog_post.cached_slug.should == 'new-post'
+        @blog_post.should == BlogPost.find('new-post')
+
+        @blog_post.update_attributes!(:url => 'Invalid As Url')
+        @blog_post.url        .should == 'invalid-as-url'
+        @blog_post.cached_slug.should == 'invalid-as-url'
+        @blog_post.should == BlogPost.find('invalid-as-url')
+
+        @blog_post.update_attributes!(:title => 'B')
+        @blog_post.url        .should == 'invalid-as-url'
+        @blog_post.cached_slug.should == 'invalid-as-url'
       end
     end
 
@@ -86,7 +156,7 @@ module K3::Blog
     end
 
     describe "normalization" do
-      [:title, :summary, :body, :url].each do |attr_name|
+      [:title, :summary, :body].each do |attr_name|
         it { should normalize_attribute(attr_name).from('  Something  ').to('Something') }
         it { should normalize_attribute(attr_name).from('').to(nil) }
       end
