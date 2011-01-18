@@ -4,11 +4,12 @@
   - content_for :title do
     = strip_tags @blog_post.title
 
-  - k3_ribbon_add_item do
-    %li.post_information.link
-      = link_to_function 'Post Information', "jQuery('.post_information.drawer').slideToggle()"
-  - k3_ribbon_add_drawer :post_information do
-    = render_cell('k3/blog/blog_posts', :metadata_drawer, :blog_post => @blog_post)
+  - if edit_mode?
+    - k3_ribbon_add_item do
+      %li.post_information.link
+        = link_to_function 'Post Information', "jQuery('.post_information.drawer').slideToggle()"
+    - k3_ribbon_add_drawer :post_information do
+      = render_cell('k3/blog/blog_posts', :metadata_drawer, :blog_post => @blog_post)
 
   %div{:class => dom_class(@blog_post), :id => dom_id(@blog_post)}
     = render_cell('k3/blog/blog_posts', :published_status, :blog_post => @blog_post)
