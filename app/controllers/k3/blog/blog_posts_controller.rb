@@ -66,10 +66,12 @@ module K3
             format.html { redirect_to(k3_blog_blog_post_url(@blog_post), :notice => 'Blog post was successfully updated.') }
             format.xml  { head :ok }
             format.json { render :nothing =>  true }
+            format.text { render :nothing =>  true }
           else
             format.html { render :action => "edit" }
             format.xml  { render :xml => @blog_post.errors, :status => :unprocessable_entity }
             format.json { render :nothing =>  true }
+            format.text { render :nothing =>  true }
           end
         end
       end

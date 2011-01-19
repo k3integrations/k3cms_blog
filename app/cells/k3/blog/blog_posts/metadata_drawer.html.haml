@@ -2,7 +2,7 @@
 %div{:class => dom_class(@blog_post), :id => dom_id(@blog_post)}
   .title
     %label Title:
-    = inline_editable('span', @blog_post, :title) do
+    = inline_editable('span', @blog_post, :title, 'data-idle-save-time' => '1000') do
       = raw @blog_post.title
 
   .url
