@@ -12,6 +12,7 @@ module K3
       # As long as custom_url? is false (the url attribute is nil), it will automatically create a slug based on title any time the title is updated.
       # As soon as you set the url manually, however, it will stop doing that.
       has_friendly_id :title_or_custom_url, :use_slug => true
+      before_validation :normalize_url_attribute
 
       belongs_to :author, :class_name => 'User'
 
@@ -43,9 +44,16 @@ module K3
       def custom_url?
         read_attribute(:url).present?
       end
+    private
+      def normalize_url_attribute
+        if read_attribute(:url).present?
+          self.url = normalize_friendly_id(read_attribute(:url))
+        end
+      end
       def title_or_custom_url
         custom_url? ? read_attribute(:url) : title
       end
+    public
       def normalize_friendly_id(text)
         # This uses stringex
         text.to_url
