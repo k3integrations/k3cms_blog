@@ -12,7 +12,6 @@ module K3
       # As long as custom_url? is false (the url attribute is nil), it will automatically create a slug based on title any time the title is updated.
       # As soon as you set the url manually, however, it will stop doing that.
       has_friendly_id :title_or_custom_url, :use_slug => true
-      before_validation :normalize_url_attribute
 
       belongs_to :author, :class_name => 'User'
 
@@ -38,18 +37,9 @@ module K3
         title
       end
 
-      def url
-        cached_slug
-      end
-      def custom_url?
-        read_attribute(:url).present?
-      end
+      #---------------------------------------------------------------------------------------------
+      # url/slug/friendly_id
     private
-      def normalize_url_attribute
-        if read_attribute(:url).present?
-          self.url = normalize_friendly_id(read_attribute(:url))
-        end
-      end
       def title_or_custom_url
         custom_url? ? read_attribute(:url) : title
       end
@@ -58,7 +48,23 @@ module K3
         # This uses stringex
         text.to_url
       end
+      def url
+        cached_slug
+      end
+      def url=(new)
+        if new
+          new = normalize_friendly_id(new)
+        end
+        # By checking if new != url, we solve the problem where a user might tab from the title field to the url field, and then when they tab out of the url field, it will try to save the current url as a custom url instead of realizing that this is still an automatic url from the title.
+        if new != url # NOT read_attribute(:url) -- we want to compare to the cached_slug based on the title if that's what is currently being used for the slug
+          write_attribute(:url, new)
+        end
+      end
+      def custom_url?
+        read_attribute(:url).present?
+      end
 
+      #---------------------------------------------------------------------------------------------
       def published?
         date and Time.zone.now >= date.beginning_of_day
       end

@@ -106,6 +106,19 @@ module K3::Blog
         @blog_post.should_not be_custom_url
       end
 
+      it "when I set title to 'A', causing the url to automatically be 'a', and then try to set manually url to 'a', the url attribute should not get updated because the new value is not different from the existing value" do
+        BlogPost.destroy_all
+        @blog_post = BlogPost.create!(:title => 'A')
+        @blog_post.url        .should == 'a'
+        @blog_post.cached_slug.should == 'a'
+        @blog_post.should_not be_custom_url
+
+        @blog_post.update_attributes!(:url => 'a')
+        @blog_post.url        .should == 'a'
+        @blog_post.cached_slug.should == 'a'
+        @blog_post.should_not be_custom_url
+      end
+
       # Setting custom url disables automatic slug generation
       it "when I set url to 'a', then change title to 'B', cached_slug remains at the custom url, 'a'" do
         BlogPost.destroy_all
