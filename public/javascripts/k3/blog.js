@@ -1,2 +1,2 @@
-K3_Pages = {
+K3_Blog = {
 }
