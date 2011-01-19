@@ -124,21 +124,60 @@ module K3::Blog
         @blog_post.cached_slug.should == 'a'
       end
 
-      it "when I set url to something invalid like 'My Post', it converts it to something valid" do
+      1.times do
+      it "when I set url to invalid url value '#{s='Invalid as URL'}', it converts it to something valid" do
         BlogPost.destroy_all
         @blog_post = BlogPost.create!()
         @blog_post.url        .should == 'new-post'
         @blog_post.cached_slug.should == 'new-post'
         @blog_post.should == BlogPost.find('new-post')
 
-        @blog_post.update_attributes!(:url => 'Invalid As Url')
-        @blog_post.url        .should == 'invalid-as-url'
-        @blog_post.cached_slug.should == 'invalid-as-url'
+        @blog_post.update_attributes!(:url => s)
+        @blog_post.read_attribute(:url).should == s
+        @blog_post.url.                 should == 'invalid-as-url'
+        @blog_post.cached_slug.         should == 'invalid-as-url'
         @blog_post.should == BlogPost.find('invalid-as-url')
 
         @blog_post.update_attributes!(:title => 'B')
         @blog_post.url        .should == 'invalid-as-url'
         @blog_post.cached_slug.should == 'invalid-as-url'
+      end
+      end
+
+      1.times do
+      it "when I set url to invalid url value '#{s='<blink>cool</blink>'}', it strips out the tags" do
+        BlogPost.destroy_all
+        @blog_post = BlogPost.create!()
+        @blog_post.url        .should == 'new-post'
+        @blog_post.cached_slug.should == 'new-post'
+        @blog_post.should == BlogPost.find('new-post')
+
+        @blog_post.update_attributes!(:url => s)
+        @blog_post.read_attribute(:url).should == s
+        @blog_post.url.                 should == 'cool'
+        @blog_post.cached_slug.         should == 'cool'
+        @blog_post.should == BlogPost.find('cool')
+
+        @blog_post.update_attributes!(:title => 'B')
+        @blog_post.url        .should == 'cool'
+        @blog_post.cached_slug.should == 'cool'
+      end
+      end
+
+      [nil, '', '<br>'].each do |s|
+        it "when I set url to #{s.inspect}, it goes back to creating the slug based on title" do
+          BlogPost.destroy_all
+          @blog_post = BlogPost.create!(:title => 'My title', :url => 'my-url')
+          @blog_post.url        .should == 'my-url'
+          @blog_post.cached_slug.should == 'my-url'
+          @blog_post.should be_custom_url
+
+          @blog_post.update_attributes!(:url => s)
+          @blog_post.read_attribute(:url).should == s
+          @blog_post.url        .should == 'my-title'
+          @blog_post.cached_slug.should == 'my-title'
+          @blog_post.should_not be_custom_url
+        end
       end
     end
 
