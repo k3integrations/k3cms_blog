@@ -10,6 +10,13 @@
     = inline_editable('span', @blog_post, :url) do
       = raw @blog_post.url
 
+  .date
+    - if edit_mode? and can?(:edit, K3::Blog::BlogPost)
+      = inline_editable('span', @blog_post, :date) do
+        = raw @blog_post.date
+    - else
+      = raw @blog_post.date
+
   .summary
     %label Summary:
     = inline_editable('div', @blog_post, :summary) do

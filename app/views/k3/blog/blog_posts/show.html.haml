@@ -1,6 +1,6 @@
 .k3_blog_blog_posts_show
   - content_for :last_saved_status do
-    = render_cell('k3/blog/blog_posts', :last_saved_status, :blog_post => @blog_post)
+    = render_cell 'k3/blog/blog_posts', :last_saved_status, :blog_post => @blog_post
   - content_for :title do
     = strip_tags @blog_post.title
 
@@ -9,19 +9,26 @@
       %li
         = link_to_function 'Post Information', "jQuery('.k3_blog_blog_post_metadata.drawer').slideToggle()"
     - k3_ribbon_add_drawer :k3_blog_blog_post_metadata do
-      = render_cell('k3/blog/blog_posts', :metadata_drawer, :blog_post => @blog_post)
+      = render_cell 'k3/blog/blog_posts', :metadata_drawer, :blog_post => @blog_post
 
   %div{:class => dom_class(@blog_post), :id => dom_id(@blog_post)}
-    = render_cell('k3/blog/blog_posts', :published_status, :blog_post => @blog_post)
+    = render_cell 'k3/blog/blog_posts', :published_status, :blog_post => @blog_post
     %h1
       - if edit_mode? and can?(:edit, K3::Blog::BlogPost)
         = inline_editable('span', @blog_post, :title) do
-          = raw(@blog_post.title)
+          = raw @blog_post.title
       - else
-        = raw(@blog_post.title)
+        = raw @blog_post.title
+
+    .date
+      - if edit_mode? and can?(:edit, K3::Blog::BlogPost)
+        = inline_editable('span', @blog_post, :date) do
+          = raw @blog_post.date
+      - else
+        = @blog_post.date.to_s(:long)
 
     - if edit_mode? and can?(:edit, K3::Blog::BlogPost)
       = inline_editable('div', @blog_post, :body) do
-        = raw(@blog_post.body)
+        = raw @blog_post.body
     - else
-      = raw(@blog_post.body)
+      = raw @blog_post.body
