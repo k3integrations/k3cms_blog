@@ -8,7 +8,7 @@
 
   - @blog_posts.each do |blog_post|
     %div{:class => dom_class(blog_post), :id => dom_id(blog_post)}
-      .title
+      %h3.title
         - if edit_mode?
           = inline_editable('span', blog_post, :title) do
             = raw blog_post.title
@@ -42,3 +42,6 @@
 
       - else
         = link_to   'View more', url_for(blog_post)
+
+      .post_bottom
+        -# Comments, etc. go here

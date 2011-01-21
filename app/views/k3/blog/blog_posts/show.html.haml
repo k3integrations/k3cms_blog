@@ -13,7 +13,7 @@
 
   %div{:class => dom_class(@blog_post), :id => dom_id(@blog_post)}
     = render_cell 'k3/blog/blog_posts', :published_status, :blog_post => @blog_post
-    %h1
+    %h2.title
       - if edit_mode? and can?(:edit, K3::Blog::BlogPost)
         = inline_editable('span', @blog_post, :title) do
           = raw @blog_post.title
@@ -27,8 +27,12 @@
       - else
         = @blog_post.date.to_s(:long)
 
-    - if edit_mode? and can?(:edit, K3::Blog::BlogPost)
-      = inline_editable('div', @blog_post, :body) do
+    .body
+      - if edit_mode? and can?(:edit, K3::Blog::BlogPost)
+        = inline_editable('div', @blog_post, :body) do
+          = raw @blog_post.body
+      - else
         = raw @blog_post.body
-    - else
-      = raw @blog_post.body
+
+    .post_bottom
+      -# Comments, etc. go here
