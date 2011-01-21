@@ -17,15 +17,12 @@
 
       = render_cell('k3/blog/blog_posts', :published_status, :blog_post => blog_post)
 
-      /
-        url: #{blog_post.url}
-
       .date
         - if edit_mode? and can?(:edit, K3::Blog::BlogPost)
           = inline_editable('span', blog_post, :date) do
             = raw blog_post.date
         - else
-          = blog_post.date
+          = blog_post.date.to_s(:long)
 
       .summary
         - if edit_mode? and can?(:edit, K3::Blog::BlogPost)
