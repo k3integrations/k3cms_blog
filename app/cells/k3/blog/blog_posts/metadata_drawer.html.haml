@@ -14,3 +14,17 @@
     %label Summary:
     = inline_editable('div', @blog_post, :summary) do
       = raw @blog_post.summary
+
+
+  = link_to_function 'Extended Information', "jQuery('.k3_blog_blog_post_extended_metadata.drawer').slideToggle()"
+  - k3_ribbon_render_drawer :k3_page_extended_metadata do
+    .title
+      %label Meta Description:
+      = inline_editable('span', @blog_post, :meta_description) do
+        = @blog_post.meta_description
+
+    .url
+      %label Meta Keywords:
+      = inline_editable('span', @blog_post, :meta_keywords) do
+        = @blog_post.meta_keywords
+
