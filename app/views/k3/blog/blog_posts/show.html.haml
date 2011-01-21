@@ -4,7 +4,7 @@
   - content_for :title do
     = strip_tags @blog_post.title
 
-  - if edit_mode?
+  - if edit_mode? and can?(:edit, K3::Blog::BlogPost)
     - k3_ribbon_add_item do
       %li
         = link_to_function 'Post Information', "jQuery('.k3_blog_blog_post_metadata.drawer').slideToggle()"
@@ -14,13 +14,13 @@
   %div{:class => dom_class(@blog_post), :id => dom_id(@blog_post)}
     = render_cell('k3/blog/blog_posts', :published_status, :blog_post => @blog_post)
     %h1
-      - if edit_mode?
+      - if edit_mode? and can?(:edit, K3::Blog::BlogPost)
         = inline_editable('span', @blog_post, :title) do
           = raw(@blog_post.title)
       - else
         = raw(@blog_post.title)
 
-    - if edit_mode?
+    - if edit_mode? and can?(:edit, K3::Blog::BlogPost)
       = inline_editable('div', @blog_post, :body) do
         = raw(@blog_post.body)
     - else
