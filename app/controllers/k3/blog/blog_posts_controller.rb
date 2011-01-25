@@ -65,13 +65,11 @@ module K3
           if @blog_post.update_attributes(params[:k3_blog_blog_post])
             format.html { redirect_to(k3_blog_blog_post_url(@blog_post), :notice => 'Blog post was successfully updated.') }
             format.xml  { head :ok }
-            format.json { render :nothing =>  true }
-            format.text { render :nothing =>  true }
+            format.json { render :json => {} }
           else
             format.html { render :action => "edit" }
             format.xml  { render :xml => @blog_post.errors, :status => :unprocessable_entity }
-            format.json { render :nothing =>  true }
-            format.text { render :nothing =>  true }
+            format.json { render :json => {:error => @blog_post.errors.full_messages.join('<br/>')} }
           end
         end
       end
