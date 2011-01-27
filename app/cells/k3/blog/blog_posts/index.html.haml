@@ -9,7 +9,7 @@
   - @blog_posts.each do |blog_post|
     %div{:class => dom_class(blog_post), :id => dom_id(blog_post)}
       %h3.title
-        - if edit_mode?
+        - if edit_mode? and can?(:edit, K3::Blog::BlogPost)
           = inline_editable('span', blog_post, :title) do
             = raw blog_post.title
         - else
