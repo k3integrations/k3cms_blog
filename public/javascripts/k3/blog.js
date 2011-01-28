@@ -2,8 +2,8 @@ K3_Blog = {
 }
 
 k3_blog_blog_post = {
-  updatePage: function(object_name, object_id, object) {
-    K3_InlineEditor.updatePageFromObject(object_name, object_id, object)
+  updatePage: function(object_name, object_id, object, element_data) {
+    K3_InlineEditor.updatePageFromObject(object_name, object_id, object, element_data)
 
     // TODO: render_cell('k3/blog/blog_posts', :published_status, :blog_post => blog_post)
     // console.log(object.date)
