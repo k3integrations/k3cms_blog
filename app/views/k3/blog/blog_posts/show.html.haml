@@ -5,7 +5,7 @@
     = strip_tags @blog_post.title
 
   - if edit_mode? and can?(:edit, K3::Blog::BlogPost)
-    - k3_ribbon_add_item do
+    - k3_ribbon_add_item :blog_post do
       %li
         = link_to_function 'Post Information', "jQuery('.k3_blog_blog_post_metadata.drawer').slideToggle()"
     - k3_ribbon_add_drawer :k3_blog_blog_post_metadata do
