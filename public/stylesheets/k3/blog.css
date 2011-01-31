@@ -22,7 +22,7 @@
 
 .k3_blog li.icon.button.b1 a                 { background-position: 0 -24px;}
 .k3_blog li.icon.button.b2 a                 { background-position: 0 -48px;}
-.k3_blog li.icon.button.b3 a                 { background-position: 0 -72px;}
+.k3_blog li.icon.button.list_blog_posts a    { background-position: 0 -72px;}
 .k3_blog li.icon.button.blog_post_metadata a { background-position: 0 -96px;}
 .k3_blog li.icon.button.b5 a                 { background-position: 0 -121px;}
 .k3_blog li.icon.button.b6 a                 { background-position: 0 -144px;}
