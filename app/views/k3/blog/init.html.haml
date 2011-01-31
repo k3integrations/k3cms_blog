@@ -1,0 +1,18 @@
+:javascript
+  $(function() {
+    $('#k3_ribbon').k3_ribbon({tabs: [
+      new K3_Ribbon.Tab('k3_blog', 'Blog Post', [
+        new K3_Ribbon.Section('k3_blog', [
+          new K3_Ribbon.Button({
+            element: $('\
+              <li class="icon button blog_post_metadata"> \
+                <a title="Post Information" href="javascript:;">&nbsp;</a> \
+              </li> \
+            '),
+            onClick:  function() { $(this).k3_ribbon('isEnabled') && $(this).trigger('invoke'); },
+            onInvoke: function() { $('.k3_blog_blog_post_metadata.drawer').slideToggle(); $('.k3_blog_blog_post_metadata.drawer .editable:visible:eq(0)').focus() }
+          }),
+        ])
+      ])
+    ]})
+  })

@@ -1,0 +1,7 @@
+= K3 Blog
+
+Provides simple blog functionality for the K3 CMS.
+
+= Credits
+
+Some icons were taken from the Silk icon set (http://www.famfamfam.com/lab/icons/silk/), copyright Mark James. This work is licensed under a Creative Commons Attribution 2.5 License [http://creativecommons.org/licenses/by/2.5/].
