@@ -27,7 +27,7 @@
         = inline_editable('span', @blog_post, :date) do
           = raw @blog_post.date
       - else
-        = @blog_post.date.to_s(:long)
+        = @blog_post.date && @blog_post.date.to_s(:long)
 
     .body
       - if edit_mode? and can?(:edit, K3::Blog::BlogPost)
