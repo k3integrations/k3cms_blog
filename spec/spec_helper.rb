@@ -3,6 +3,7 @@ require 'rails'
 require 'action_pack'
 require 'action_view/railtie' # So that config.action_view is available in engine.rb
 require 'active_record'       # Make sure this gets required before attribute_normalizer
+require 'cells'
 Bundler.require(:default, :development)
 
 require File.expand_path('../../lib/k3_blog', __FILE__)

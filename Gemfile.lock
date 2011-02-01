@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/adzap/validates_timeliness.git
+  revision: dac62060df6a1d78dde3ab8e37b018686ee67d37
+  specs:
+    validates_timeliness (3.0.5)
+      timeliness (~> 0.3.2)
+
 PATH
   remote: .
   specs:
@@ -43,9 +50,9 @@ GEM
       activesupport (= 3.0.3)
     activesupport (3.0.3)
     archive-tar-minitar (0.5.2)
-    arel (2.0.6)
+    arel (2.0.7)
     attribute_normalizer (0.3.1)
-    babosa (0.2.1)
+    babosa (0.2.2)
     builder (2.1.2)
     cells (3.4.4)
     columnize (0.3.2)
@@ -59,7 +66,7 @@ GEM
     k3_core (0.1.0)
     linecache19 (0.5.11)
       ruby_core_source (>= 0.1.4)
-    mail (2.2.14)
+    mail (2.2.15)
       activesupport (>= 2.3.6)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -111,6 +118,7 @@ GEM
     sqlite3-ruby (1.3.2)
     stringex (1.2.0)
     thor (0.14.6)
+    timeliness (0.3.3)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.23)
@@ -119,17 +127,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  actionpack (~> 3.0.0)
-  activerecord (~> 3.0.0)
-  attribute_normalizer
-  cells
-  facets
-  friendly_id
   k3_blog!
-  k3_core
-  rails (~> 3.0.0)
   rspec (~> 2.2.0)
   rspec-rails (~> 2.2.0)
   ruby-debug19
   sqlite3-ruby
-  stringex
+  validates_timeliness!

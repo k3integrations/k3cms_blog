@@ -28,14 +28,11 @@ module K3::Blog
     describe "when a saved record (with body set to nil) is initialized" do
       before do
         @blog_post = BlogPost.create!(:title => 'Something')
-        @blog_post.update_attributes!(:body => nil, :date => nil)
+        @blog_post.update_attributes!(:body => nil)
       end
 
       it "should not change body" do
         @blog_post.body.should be_nil
-      end
-      it "should not change date" do
-        @blog_post.date.should be_nil
       end
     end
 
@@ -227,6 +224,24 @@ module K3::Blog
      #    page2.errors[:url].should be_present
      #  end
      #end
+
+      describe 'date' do
+        it "accepts valid dates" do
+          BlogPost.destroy_all
+          page = BlogPost.new(url: '/page1', :date => '2011-02-10')
+          page.should be_valid
+        end
+
+        it "doesn't accept valid date" do
+          BlogPost.destroy_all
+          page = BlogPost.new(url: '/page1')
+          page.date = '2011-02-99'
+          page.valid?
+          page.should_not be_valid
+          page.errors['date'].first.should match(/not a valid date/)
+        end
+      end
+
     end
 
     describe 'to_s' do

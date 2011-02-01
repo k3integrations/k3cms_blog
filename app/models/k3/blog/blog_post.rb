@@ -18,6 +18,7 @@ module K3
       normalize_attributes :title, :summary, :body, :with => [:strip, :blank]
 
       validates :title, :presence => true
+      validates :date, :timeliness => {:type => :date}
       #validates :url, :uniqueness => true, :allow_nil => true, :allow_blank => true
 
       after_initialize :set_defaults

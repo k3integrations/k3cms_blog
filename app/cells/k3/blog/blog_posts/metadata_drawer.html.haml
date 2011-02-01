@@ -11,6 +11,7 @@
       = raw @blog_post.url
 
   .date
+    %label Date:
     - if edit_mode? and can?(:edit, K3::Blog::BlogPost)
       = inline_editable('span', @blog_post, :date) do
         = raw @blog_post.date
