@@ -2,6 +2,12 @@
 
 Provides simple blog functionality for the K3 CMS.
 
-= Credits
+== License
+
+Copyright 2010 K3 Integrations, LLC
+
+Licensed under the GNU Lesser General Public License, Version 3 (see License.txt).
+
+== Credits
 
 Some icons were taken from the Silk icon set (http://www.famfamfam.com/lab/icons/silk/), copyright Mark James. This work is licensed under a Creative Commons Attribution 2.5 License [http://creativecommons.org/licenses/by/2.5/].
