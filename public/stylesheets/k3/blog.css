@@ -6,12 +6,17 @@
 
 .k3_blog_blog_posts_index .unpublished,
 .k3_blog_blog_posts_show  .unpublished {
+  /* TODO: this could be styled better */
   color: red;
 }
 .k3_blog_blog_posts_index .unpublished {
 }
 .k3_blog_blog_posts_show  .unpublished {
   font-size: 110%;
+}
+
+.k3_blog_blog_posts_index .below_summary {
+  clear: both;
 }
 
 /*------------------------------------------------------------------------------------------------*/
