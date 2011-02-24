@@ -6,8 +6,9 @@
 
 .k3_blog_blog_posts_index .unpublished,
 .k3_blog_blog_posts_show  .unpublished {
-  /* TODO: this could be styled better */
-  color: red;
+  border: 1px solid #A33028;
+  background: #E6554B;
+  color: white;
 }
 .k3_blog_blog_posts_index .unpublished {
 }
