@@ -84,12 +84,6 @@ module K3
         end
       end
 
-      def last_saved_status
-        respond_to do |format|
-          format.html { render :text => render_cell('k3/blog/blog_posts', :last_saved_status, :blog_post => @blog_post) }
-        end
-      end
-
     end
   end
 end

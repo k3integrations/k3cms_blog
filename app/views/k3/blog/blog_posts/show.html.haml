@@ -1,6 +1,4 @@
 .k3_blog_blog_posts_show
-  - content_for :last_saved_status do
-    = render_cell 'k3/blog/blog_posts', :last_saved_status, :blog_post => @blog_post
   - content_for :title do
     = strip_tags @blog_post.title
 

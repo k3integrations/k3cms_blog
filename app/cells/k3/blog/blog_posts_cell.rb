@@ -26,13 +26,6 @@ module K3
         render
       end
 
-      def last_saved_status
-        @blog_post = @opts[:blog_post]
-        if @blog_post && !@blog_post.new_record?
-          render
-        end
-      end
-
       def metadata_drawer
         @blog_post = @opts[:blog_post]
         render
