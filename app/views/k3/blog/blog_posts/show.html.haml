@@ -36,3 +36,6 @@
 
     .post_bottom
       -# Comments, etc. go here
+
+:javascript
+  k3_blog_blog_post.updatePage('#{dom_class(@blog_post)}', '#{dom_class(@blog_post)}', #{@blog_post.to_json}.blog_post, null);
