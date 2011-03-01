@@ -32,7 +32,7 @@
           = raw blog_post.summary
 
       .below_summary
-        - if edit_mode?
+        - if edit_mode? and can?(:edit, K3::Blog::BlogPost)
           - if can?(:edit, K3::Blog::BlogPost)
             = link_to   'Continue &raquo;'.html_safe, polymorphic_url(blog_post, :focus => "##{dom_id(blog_post)} .editable[data-attribute=body]", :only_path => true)
           - if can?(:destroy, K3::Blog::BlogPost)
