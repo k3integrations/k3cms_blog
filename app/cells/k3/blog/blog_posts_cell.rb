@@ -27,7 +27,7 @@ module K3
       end
 
       def metadata_drawer
-        @blog_post = @opts[:blog_post]
+        @blog_post = options[:blog_post]
         render
       end
 
