@@ -5,8 +5,17 @@ require 'facets/pathname'
 
 module K3
   module Blog
-
     class Engine < Rails::Engine
+
+      config.before_initialize do
+        # Work around the fact that the line:
+        #   Bundler.require(:default, Rails.env) if defined?(Bundler)
+        # in config/application.rb only does a 'require' for the gems explicitly listed in the app's Gemfile -- not for the gems *they* might depend on.
+        require 'haml'
+        #require 'haml-rails'
+        require 'validates_timeliness'
+      end
+
       config.before_configuration do |app|
         # Ensure that friendly_id/railtie is loaded soon enough
         # The Bundler.require(:default, Rails.env) in application.rb *only* *requires* gems listed in the *app*'s Gemfile, not gems that those gems depend on, even though it *installs* those.
@@ -32,7 +41,7 @@ module K3
       config.to_prepare do |app|
         require Pathname[__DIR__] + '../../../app/models/user.rb'
       end
-    end
 
+    end
   end
 end
