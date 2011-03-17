@@ -32,6 +32,9 @@ module K3
       config.action_view.javascript_expansions[:k3].concat [
         'k3/blog.js',
       ]
+      config.action_view.stylesheet_expansions[:k3].concat [
+        'k3/blog.css',
+      ]
 
       initializer 'k3.blog.add_cells_paths' do |app|
         Cell::Base.view_paths += [Pathname[__DIR__] + '../../../app/cells']
