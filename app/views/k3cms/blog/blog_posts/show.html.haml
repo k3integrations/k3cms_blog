@@ -1,0 +1,41 @@
+.k3cms_blog_blog_posts_show
+  - content_for :title do
+    = strip_tags @blog_post.title
+
+  - if edit_mode? and can?(:edit, K3cms::Blog::BlogPost)
+    :javascript
+      $(function() {
+        $('#k3cms_ribbon').k3cms_ribbon('enable', '.k3cms_blog .blog_post_metadata.button');
+      })
+
+    - k3cms_ribbon_add_drawer :k3cms_blog_blog_post_metadata do
+      = render_cell 'k3cms/blog/blog_posts', :metadata_drawer, :blog_post => @blog_post
+
+  %div{:class => dom_class(@blog_post), :id => dom_id(@blog_post)}
+    = render_cell 'k3cms/blog/blog_posts', :published_status, :blog_post => @blog_post
+    %h2.title
+      - if edit_mode? and can?(:edit, K3cms::Blog::BlogPost)
+        = inline_editable('span', @blog_post, :title) do
+          = raw @blog_post.title
+      - else
+        = raw @blog_post.title
+
+    .date
+      - if edit_mode? and can?(:edit, K3cms::Blog::BlogPost)
+        = inline_editable('span', @blog_post, :date) do
+          = raw @blog_post.date
+      - else
+        = @blog_post.date && @blog_post.date.to_s(:long)
+
+    .body
+      - if edit_mode? and can?(:edit, K3cms::Blog::BlogPost)
+        = inline_editable('div', @blog_post, :body) do
+          = raw @blog_post.body
+      - else
+        = raw @blog_post.body
+
+    .post_bottom
+      -# Comments, etc. go here
+
+:javascript
+  k3cms_blog_blog_post.updatePage('#{dom_class(@blog_post)}', '#{dom_class(@blog_post)}', #{@blog_post.to_json}.blog_post, null);

@@ -1,6 +1,6 @@
-= K3 Blog
+= K3cms Blog
 
-Provides simple blog functionality for the K3 CMS.
+Provides simple blog functionality for the K3cms.
 
 == License
 

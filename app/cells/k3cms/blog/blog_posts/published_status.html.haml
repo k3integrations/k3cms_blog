@@ -1,0 +1,4 @@
+- if k3cms_user.k3cms_permitted?(:create_blog_post)
+  - if !@options[:blog_post].published?
+    .unpublished Unpublished
+

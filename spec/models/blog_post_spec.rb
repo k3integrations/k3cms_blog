@@ -1,8 +1,8 @@
 # encoding: utf-8
 require 'spec_helper'
-require 'app/models/k3/blog/blog_post'
+require 'app/models/k3cms/blog/blog_post'
 
-module K3::Blog
+module K3cms::Blog
   describe BlogPost do
     before do
       Time.stub!(:now).and_return(Time.mktime(2011,1,1, 12,0))

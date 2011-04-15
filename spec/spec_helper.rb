@@ -6,7 +6,7 @@ require 'active_record'       # Make sure this gets required before attribute_no
 require 'cells'
 Bundler.require(:default, :development)
 
-require File.expand_path('../../lib/k3_blog', __FILE__)
+require File.expand_path('../../lib/k3cms_blog', __FILE__)
 
 require 'connection_and_schema'
 

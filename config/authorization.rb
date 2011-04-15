@@ -1,4 +1,4 @@
-K3::Blog::Engine.authorization.draw do
+K3cms::Blog::Engine.authorization.draw do
   # First define and describe some suggested permission sets.
   suggested_permission_set :default, 'Allows managers to create & edit all blog_posts, and delete their own blog_posts'
   suggested_permission_set :user_creation, 'Allows users to create and manage their own blog_posts'
