@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails',        '~> 3.0.0'
   s.add_dependency 'activerecord', '~> 3.0.0'
   s.add_dependency 'actionpack',   '~> 3.0.0'
+  s.add_dependency 'cancan'
   s.add_dependency 'cells'
   s.add_dependency 'attribute_normalizer'
   s.add_dependency 'friendly_id'

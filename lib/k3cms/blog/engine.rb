@@ -14,6 +14,7 @@ module K3cms
         require 'haml'
         #require 'haml-rails'
         require 'validates_timeliness'
+        require 'cancan'
       end
 
       config.before_configuration do |app|
@@ -28,6 +29,15 @@ module K3cms
         require 'attribute_normalizer'
       end
 
+      # This is to avoid errors like undefined method `can?' for #<K3cms::Blog::BlogPostCell>
+      initializer 'k3.authorization.cancan' do
+        ActiveSupport.on_load(:action_controller) do
+          include CanCan::ControllerAdditions
+          Cell::Base.send :include, CanCan::ControllerAdditions
+        end
+      end
+
+
       config.action_view.javascript_expansions[:k3] ||= []
       config.action_view.javascript_expansions[:k3].concat [
         'k3cms/blog.js',
@@ -36,8 +46,14 @@ module K3cms
         'k3cms/blog.css',
       ]
 
-      initializer 'k3.blog.add_cells_paths' do |app|
+      initializer 'k3.blog.cells_paths' do |app|
         Cell::Base.view_paths += [Pathname[__DIR__] + '../../../app/cells']
+      end
+
+      initializer 'k3.pages.hooks', :before => 'k3.core.hook_listeners' do |app|
+        class K3cms::Blog::Hooks < K3cms::ThemeSupport::HookListener
+          insert_after :top_of_page, :file => 'k3cms/blog/init.html.haml'
+        end
       end
 
       # Auto-loading doesn't work for this because User is opened in *multiple* different files, so this file would never get loaded.
