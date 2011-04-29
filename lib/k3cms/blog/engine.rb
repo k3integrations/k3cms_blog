@@ -29,6 +29,12 @@ module K3cms
         require 'attribute_normalizer'
       end
 
+      initializer 'k3.blog.require_decorators' do |app|
+        Dir.glob(config.root + "app/**/*_decorator*.rb") do |c|
+          Rails.env.production? ? require(c) : load(c)
+        end
+      end
+
       # This is to avoid errors like undefined method `can?' for #<K3cms::Blog::BlogPostCell>
       initializer 'k3.authorization.cancan' do
         ActiveSupport.on_load(:action_controller) do
@@ -36,7 +42,6 @@ module K3cms
           Cell::Base.send :include, CanCan::ControllerAdditions
         end
       end
-
 
       config.action_view.javascript_expansions[:k3] ||= []
       config.action_view.javascript_expansions[:k3].concat [
@@ -54,11 +59,6 @@ module K3cms
         class K3cms::Blog::Hooks < K3cms::ThemeSupport::HookListener
           insert_after :top_of_page, :file => 'k3cms/blog/init.html.haml'
         end
-      end
-
-      # Auto-loading doesn't work for this because User is opened in *multiple* different files, so this file would never get loaded.
-      config.to_prepare do |app|
-        require Pathname[__DIR__] + '../../../app/models/user.rb'
       end
 
     end
