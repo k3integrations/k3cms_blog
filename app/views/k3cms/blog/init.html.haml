@@ -11,7 +11,7 @@
           }),
           new K3cms_Ribbon.Button({
             element: $('<li/>', { 'class': "icon button list_blog_posts" }).
-              append($('<a/>', {title: "List Blog Posts", href: "#{root_path}", html: '&nbsp;'})),
+              append($('<a/>', {title: "List Blog Posts", href: "#{k3cms_blog_blog_posts_path}", html: '&nbsp;'})),
             onMousedown: function(event) {
               var a = $(this).find('a').eq(0);
               if ($(this).k3cms_ribbon('isEnabled')) {

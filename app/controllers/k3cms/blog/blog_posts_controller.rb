@@ -44,7 +44,7 @@ module K3cms
             format.html do
               #redirect_to(k3cms_blog_blog_post_url(@blog_post),
 
-              redirect_to(root_url(:focus => "##{dom_id(@blog_post)} .editable[data-attribute=title]"),
+              redirect_to(k3cms_blog_blog_posts_url(:focus => "##{dom_id(@blog_post)} .editable[data-attribute=title]"),
                           :notice => 'Blog post was successfully created.')
             end
             format.xml  { render :xml => @blog_post, :status => :created, :location => @blog_post }
@@ -78,7 +78,7 @@ module K3cms
         @blog_post.destroy
         respond_to do |format|
           #format.html { redirect_to(k3cms_blog_blog_posts_url) }
-          format.html { redirect_to root_url }
+          format.html { redirect_to k3cms_blog_blog_posts_url }
           format.xml  { head :ok }
           format.json { render :nothing =>  true }
         end
