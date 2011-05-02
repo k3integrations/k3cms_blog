@@ -2,18 +2,16 @@ module K3cms
   module Blog
     class BaseController < ApplicationController
 
-      # Needed for CanCan authorization
       include CanCan::ControllerAdditions
+      helper K3cms::InlineEditor::InlineEditorHelper
 
       def current_ability
         @current_ability ||= K3cms::Blog::Ability.new(k3cms_user)
       end
 
       rescue_from CanCan::AccessDenied do |exception|
-        k3cms_authorization_required
+        k3cms_authorization_required(exception)
       end
-
-      helper K3cms::InlineEditor::InlineEditorHelper
 
     protected
       # Unfortunately, FriendlyId raises an error for some things instead of just adding a validation error to the errors array.

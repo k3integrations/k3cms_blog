@@ -6,6 +6,7 @@ require 'facets/pathname'
 module K3cms
   module Blog
     class Engine < Rails::Engine
+      puts self
 
       config.before_initialize do
         # Work around the fact that the line:
@@ -27,12 +28,6 @@ module K3cms
         # Ensure that active_record is loaded before attribute_normalizer, since attribute_normalizer only loads its active_record-specific code if active_record is loaded.
         require 'active_record'
         require 'attribute_normalizer'
-      end
-
-      initializer 'k3.blog.require_decorators' do |app|
-        Dir.glob(config.root + "app/**/*_decorator*.rb") do |c|
-          Rails.env.production? ? require(c) : load(c)
-        end
       end
 
       # This is to avoid errors like undefined method `can?' for #<K3cms::Blog::BlogPostCell>
@@ -58,6 +53,13 @@ module K3cms
       initializer 'k3.pages.hooks', :before => 'k3.core.hook_listeners' do |app|
         class K3cms::Blog::Hooks < K3cms::ThemeSupport::HookListener
           insert_after :top_of_page, :file => 'k3cms/blog/init.html.haml'
+        end
+      end
+
+      initializer 'k3.blog.require_decorators', :after => 'k3.core.require_decorators' do |app|
+        #puts 'k3.blog.require_decorators'
+        Dir.glob(config.root + "app/**/*_decorator*.rb") do |c|
+          Rails.env.production? ? require(c) : load(c)
         end
       end
 
