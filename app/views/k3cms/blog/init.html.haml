@@ -1,33 +1,34 @@
-:javascript
-  $(function() {
-    $('#k3cms_ribbon').k3cms_ribbon({tabs: [
-      new K3cms_Ribbon.Tab('k3cms_blog', {label: 'Blog Post', sections: [
-        new K3cms_Ribbon.Section('k3cms_blog', {items: [
-          new K3cms_Ribbon.Button({
-            element: $('<li/>', { 'class': "icon button blog_post_metadata" }).
-              append($('<a/>', {title: "Post Information", href: "javascript:;", html: '&nbsp;'})),
-            onClick:  function() { $(this).k3cms_ribbon('isEnabled') && $(this).trigger('invoke'); },
-            onInvoke: function() { $('.k3cms_blog_blog_post_metadata.drawer').slideToggle(); $('.k3cms_blog_blog_post_metadata.drawer .editable:visible:eq(0)').focus() }
-          }),
-          new K3cms_Ribbon.Button({
-            element: $('<li/>', { 'class': "icon button list_blog_posts" }).
-              append($('<a/>', {title: "List Blog Posts", href: "#{k3cms_blog_blog_posts_path}", html: '&nbsp;'})),
-            onMousedown: function(event) {
-              var a = $(this).find('a').eq(0);
-              if ($(this).k3cms_ribbon('isEnabled')) {
-                a.attr('href', a.data('href'));
-              } else {
-                a.data('href', a.attr('href'));
-                a.attr('href', 'javascript:;');
-              }
-            },
-          }),
+- if edit_mode?
+  :javascript
+    $(function() {
+      $('#k3cms_ribbon').k3cms_ribbon({tabs: [
+        new K3cms_Ribbon.Tab('k3cms_blog', {label: 'Blog Post', sections: [
+          new K3cms_Ribbon.Section('k3cms_blog', {items: [
+            new K3cms_Ribbon.Button({
+              element: $('<li/>', { 'class': "icon button blog_post_metadata" }).
+                append($('<a/>', {title: "Post Information", href: "javascript:;", html: '&nbsp;'})),
+              onClick:  function() { $(this).k3cms_ribbon('isEnabled') && $(this).trigger('invoke'); },
+              onInvoke: function() { $('.k3cms_blog_blog_post_metadata.drawer').slideToggle(); $('.k3cms_blog_blog_post_metadata.drawer .editable:visible:eq(0)').focus() }
+            }),
+            new K3cms_Ribbon.Button({
+              element: $('<li/>', { 'class': "icon button list_blog_posts" }).
+                append($('<a/>', {title: "List Blog Posts", href: "#{k3cms_blog_blog_posts_path}", html: '&nbsp;'})),
+              onMousedown: function(event) {
+                var a = $(this).find('a').eq(0);
+                if ($(this).k3cms_ribbon('isEnabled')) {
+                  a.attr('href', a.data('href'));
+                } else {
+                  a.data('href', a.attr('href'));
+                  a.attr('href', 'javascript:;');
+                }
+              },
+            }),
+          ]})
         ]})
       ]})
-    ]})
-    $('#k3cms_ribbon').k3cms_ribbon({
-      always_enabled: [
-        '.k3cms_blog .list_blog_posts.button',
-      ]
-    });
-  })
+      $('#k3cms_ribbon').k3cms_ribbon({
+        always_enabled: [
+          '.k3cms_blog .list_blog_posts.button',
+        ]
+      });
+    })

@@ -31,33 +31,32 @@ module K3cms
       end
 
       # This is to avoid errors like undefined method `can?' for #<K3cms::Blog::BlogPostCell>
-      initializer 'k3.authorization.cancan' do
+      initializer 'k3cms.authorization.cancan' do
         ActiveSupport.on_load(:action_controller) do
           include CanCan::ControllerAdditions
           Cell::Base.send :include, CanCan::ControllerAdditions
         end
       end
 
-      config.action_view.javascript_expansions[:k3] ||= []
-      config.action_view.javascript_expansions[:k3].concat [
+      config.action_view.javascript_expansions[:k3cms_editing].concat [
         'k3cms/blog.js',
       ]
-      config.action_view.stylesheet_expansions[:k3].concat [
+      config.action_view.stylesheet_expansions[:k3cms].concat [
         'k3cms/blog.css',
       ]
 
-      initializer 'k3.blog.cells_paths' do |app|
+      initializer 'k3cms.blog.cells_paths' do |app|
         Cell::Base.view_paths += [Pathname[__DIR__] + '../../../app/cells']
       end
 
-      initializer 'k3.pages.hooks', :before => 'k3.core.hook_listeners' do |app|
+      initializer 'k3cms.pages.hooks', :before => 'k3cms.core.hook_listeners' do |app|
         class K3cms::Blog::Hooks < K3cms::ThemeSupport::HookListener
           insert_after :top_of_page, :file => 'k3cms/blog/init.html.haml'
         end
       end
 
-      initializer 'k3.blog.require_decorators', :after => 'k3.core.require_decorators' do |app|
-        #puts 'k3.blog.require_decorators'
+      initializer 'k3cms.blog.require_decorators', :after => 'k3cms.core.require_decorators' do |app|
+        #puts 'k3cms.blog.require_decorators'
         Dir.glob(config.root + "app/**/*_decorator*.rb") do |c|
           Rails.env.production? ? require(c) : load(c)
         end
