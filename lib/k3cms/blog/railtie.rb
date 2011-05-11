@@ -5,7 +5,7 @@ require 'facets/pathname'
 
 module K3cms
   module Blog
-    class Engine < Rails::Engine
+    class Railtie < Rails::Engine
       puts self
 
       config.before_initialize do
