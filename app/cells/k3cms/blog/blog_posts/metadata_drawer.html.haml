@@ -3,25 +3,25 @@
   .title
     %label Title:
     = inline_editable('span', @blog_post, :title, 'data-idle-save-time' => '1000') do
-      = @blog_post.title.html_safe
+      = raw @blog_post.title
 
   .url
     %label URL:
     = inline_editable('span', @blog_post, :url) do
-      = @blog_post.url.html_safe
+      = raw @blog_post.url
 
   .date
     %label Date:
     - if edit_mode? and can?(:edit, K3cms::Blog::BlogPost)
       = inline_editable('span', @blog_post, :date) do
-        = @blog_post.date.html_safe
+        = raw @blog_post.date
     - else
-      = @blog_post.date.html_safe
+      = raw @blog_post.date
 
   .summary
     %label Summary:
     = inline_editable('div', @blog_post, :summary) do
-      = @blog_post.summary.html_safe
+      = raw @blog_post.summary
 
 
   = link_to_function 'Extended Information', "jQuery('.k3cms_blog_blog_post_extended_metadata.drawer').slideToggle()"

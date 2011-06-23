@@ -11,25 +11,25 @@
       %h3.title
         - if edit_mode? and can?(:edit, K3cms::Blog::BlogPost)
           = inline_editable('span', blog_post, :title) do
-            = blog_post.title.html_safe
+            = raw blog_post.title
         - else
-          = link_to blog_post.title.html_safe, k3cms_blog_blog_post_path(blog_post)
+          = link_to raw(blog_post.title), k3cms_blog_blog_post_path(blog_post)
 
       = render_cell('k3cms/blog/blog_posts', :published_status, :blog_post => blog_post)
 
       .date
         - if edit_mode? and can?(:edit, K3cms::Blog::BlogPost)
           = inline_editable('span', blog_post, :date) do
-            = blog_post.date
+            = raw blog_post.date
         - else
           = blog_post.date && blog_post.date.to_s(:long)
 
       .summary
         - if edit_mode? and can?(:edit, K3cms::Blog::BlogPost)
           = inline_editable('div', blog_post, :summary) do
-            = blog_post.summary.html_safe
+            = raw blog_post.summary
         - else
-          = blog_post.summary.html_safe
+          = raw blog_post.summary
 
       .below_summary
         - if edit_mode? and can?(:edit, K3cms::Blog::BlogPost)

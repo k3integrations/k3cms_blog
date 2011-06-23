@@ -16,23 +16,23 @@
     %h2.title
       - if edit_mode? and can?(:edit, K3cms::Blog::BlogPost)
         = inline_editable('span', @blog_post, :title) do
-          = @blog_post.title.html_safe
+          = raw @blog_post.title
       - else
-        = @blog_post.title.html_safe
+        = raw @blog_post.title
 
     .date
       - if edit_mode? and can?(:edit, K3cms::Blog::BlogPost)
         = inline_editable('span', @blog_post, :date) do
-          = @blog_post.date.html_safe
+          = raw @blog_post.date
       - else
         = @blog_post.date && @blog_post.date.to_s(:long)
 
     .body
       - if edit_mode? and can?(:edit, K3cms::Blog::BlogPost)
         = inline_editable('div', @blog_post, :body) do
-          = @blog_post.body.html_safe
+          = raw @blog_post.body
       - else
-        = @blog_post.body.html_safe
+        = raw @blog_post.body
 
     .post_bottom
       -# Comments, etc. go here
