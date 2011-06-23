@@ -39,7 +39,8 @@
             = button_to 'Delete',                     polymorphic_url(blog_post, :only_path => true), :confirm => 'Are you sure?', :method => :delete
 
         - else
-          = link_to   'View more', url_for(blog_post)
+          .view_more
+            = link_to   'View more', url_for(blog_post)
 
         .post_bottom
           -# Comments, etc. go here
