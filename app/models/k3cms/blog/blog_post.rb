@@ -2,6 +2,7 @@
 module K3cms
   module Blog
     class BlogPost < ActiveRecord::Base
+      self.include_root_in_json = false
       set_table_name 'k3cms_blog_blog_posts'
 
       # There are multiple fields/methods involved for the slug/friendly_id. Don't be confused:

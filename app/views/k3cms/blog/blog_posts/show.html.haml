@@ -38,4 +38,4 @@
       -# Comments, etc. go here
 
 :javascript
-  k3cms_blog_blog_post.updatePage('#{dom_class(@blog_post)}', '#{dom_class(@blog_post)}', #{@blog_post.to_json}.blog_post, null);
+  #{inline_editor_update_page_from_object(@blog_post)}

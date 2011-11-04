@@ -1,7 +1,7 @@
 K3cms_Blog = {
 }
 
-k3cms_blog_blog_post = {
+K3cms_Blog_BlogPost = {
   updatePage: function(object_name, object_id, object, source_element) {
     K3cms_InlineEditor.updatePageFromObject(object_name, object_id, object, source_element)
 

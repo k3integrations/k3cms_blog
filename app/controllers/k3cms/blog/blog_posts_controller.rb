@@ -16,14 +16,7 @@ module K3cms
         respond_to do |format|
           format.html # show.html.erb
           format.xml  { render :xml  => @blog_post }
-
-          format.json {
-            # So we have data-object="k3cms_blog_blog_post" for rest_in_place so that the params come in as params[:k3cms_blog_blog_post] like the controller expects (and which works well since form_for @blog_post creates fields named that way).
-            # But that causes rest_in_place to expect the json object to be in the form {"k3cms_blog_blog_post":...}
-            # But K3cms::Blog::BlogPost.model_name.element drops the namespace and returns 'blog_post' by default. Here is my workaround:
-            K3cms::Blog::BlogPost.model_name.instance_variable_set('@element', dom_class(@blog_post))
-            render :json => @blog_post
-          }
+          format.json { render :json => @blog_post }
         end
       end
 
